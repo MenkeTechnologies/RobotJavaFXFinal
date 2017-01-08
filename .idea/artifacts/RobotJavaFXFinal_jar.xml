@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RobotJavaFXFinal:jar">
+    <output-path>$USER_HOME$/Desktop</output-path>
+    <root id="archive" name="RobotJavaFXFinal.jar">
+      <element id="module-output" name="RobotJavaFXFinal" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../jnativehook-2.0.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
