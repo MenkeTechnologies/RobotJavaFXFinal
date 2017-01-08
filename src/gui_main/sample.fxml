@@ -8,22 +8,25 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui_main.Controller">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="487.0" prefWidth="807.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui_main.Controller">
    <center>
       <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView prefHeight="200.0" prefWidth="200.0">
-              <columns>
-                <TableColumn prefWidth="75.0" text="C1" />
-                <TableColumn prefWidth="75.0" text="C2" />
-              </columns>
-            </TableView>
+            <TableView fx:id="commandsTable" prefHeight="401.0" prefWidth="802.0" />
+            <HBox layoutX="10.0" layoutY="210.0" prefHeight="12.0" prefWidth="810.0">
+               <children>
+                  <TextField fx:id="shortcutKeyTF" prefHeight="27.0" prefWidth="183.0" promptText="The Shortcut Key" />
+                  <TextField fx:id="executableTF" layoutX="10.0" layoutY="10.0" prefHeight="27.0" prefWidth="352.0" promptText="The Executable" />
+                  <Button mnemonicParsing="false" onAction="#addACommand" prefHeight="27.0" prefWidth="85.0" text="Add" />
+                  <Button layoutX="397.0" layoutY="10.0" mnemonicParsing="false" onAction="#deleteACommand" prefHeight="27.0" prefWidth="85.0" text="Delete" />
+                  <Button layoutX="344.0" layoutY="10.0" mnemonicParsing="false" onAction="#shiftCommandUp" text="Up" />
+                  <Button layoutX="403.0" layoutY="10.0" mnemonicParsing="false" onAction="#shiftCommandDown" text="Down" />
+               </children>
+            </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
                   <TextField fx:id="commandTextField" prefHeight="27.0" prefWidth="387.0" promptText="Command" />
                   <Button mnemonicParsing="false" onAction="#activeTheTerminalRobot" prefHeight="27.0" prefWidth="85.0" text="Activate" />
-                  <Button layoutX="344.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
-                  <Button layoutX="403.0" layoutY="10.0" mnemonicParsing="false" text="Button" />
                </children>
             </HBox>
          </children>
