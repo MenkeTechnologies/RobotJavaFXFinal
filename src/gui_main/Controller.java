@@ -45,7 +45,8 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
         commandTextField.setText("bash -i /Users/jacobmenke/Desktop/new.sh");
-        commandObservableList.setAll(new Command("Shift Escape", "/bash"), new Command("tilde", "perl"));
+        commandObservableList.setAll(new Command("Shift Escape", "/bash"), new Command("tilde", "perl"), new Command("a","a"),
+                new Command("b","b"),new Command("c","c"));
 
         TableInitialization.tableColumnsSetup(commandsTable, commandObservableList);
     }

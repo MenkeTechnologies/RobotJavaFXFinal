@@ -10,14 +10,13 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 /**
  * Created by jacobmenke on 1/8/17.
  */
-
-class EditingCell<S,T> extends TableCell<S,T>{
-
+class EditingCell<S, T> extends TableCell<S, T> {
     private final TextField textfield = new TextField();
 
 //    public EditingCell() {
@@ -31,9 +30,7 @@ class EditingCell<S,T> extends TableCell<S,T>{
 }
 
 public class TableInitialization {
-
-
-    public static void tableColumnsSetup(TableView commandsTable, ObservableList<Command> commandObservableList){
+    public static void tableColumnsSetup(TableView commandsTable, ObservableList<Command> commandObservableList) {
 
         TableColumn<Command, String> commandStringTableColumn = new TableColumn<>("Key Combination");
         commandStringTableColumn.setCellValueFactory(new PropertyValueFactory<Command, String>("commandActivationKeyCombination"));
@@ -42,19 +39,15 @@ public class TableInitialization {
 
         commandStringTableColumn.setOnEditCommit(event -> {
 
-            commandObservableList.set(event.getTablePosition().getRow(),new Command(event.getNewValue(), event.getRowValue().getExecutableActivatedByKeyCombination()));
-
+            commandObservableList.set(event.getTablePosition().getRow(), new Command(event.getNewValue(), event.getRowValue().getExecutableActivatedByKeyCombination()));
         });
         TableColumn<Command, String> executableStringTableColumn = new TableColumn<>("Executable");
         executableStringTableColumn.setCellValueFactory(new PropertyValueFactory<Command, String>("executableActivatedByKeyCombination"));
         executableStringTableColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         executableStringTableColumn.setOnEditCommit(event -> {
 
-            commandObservableList.set(event.getTablePosition().getRow(),new Command(event.getRowValue().getCommandActivationKeyCombination(), event.getNewValue()));
-
+            commandObservableList.set(event.getTablePosition().getRow(), new Command(event.getRowValue().getCommandActivationKeyCombination(), event.getNewValue()));
         });
-
-
 
         commandsTable.setEditable(true);
         commandsTable.setItems(commandObservableList);
@@ -69,53 +62,45 @@ public class TableInitialization {
 //
 //        });
 
-
-
-
     }
 
-    public static void shiftCommandDown(TableView commandsTable, ObservableList<Command> commandObservableList){
-
-
+    public static void shiftCommandDown(TableView commandsTable, ObservableList<Command> commandObservableList) {
 
         ObservableList<Command> selectedItems = commandsTable.getSelectionModel().getSelectedItems();
 
-        int numberOfSelectedItems = selectedItems.size();
+        ArrayList<Integer> indices = new ArrayList<>();
+        selectedItems.forEach(item->indices.add(commandObservableList.indexOf(item)));
 
-        System.out.println("the last selected item is " + selectedItems.get(numberOfSelectedItems-1));
+        if (indices.get(indices.size()-1) < commandObservableList.size()-1) {
+            indices.forEach(key->{
+//                   System.out.println("we are swapping " + key + " and " + (key-1));
+                Collections.swap(commandObservableList, key, key+1);
+            });
 
-        int lastIndexOfSelectedItems = commandObservableList.indexOf(selectedItems.get(numberOfSelectedItems-1));
-
-      System.out.println("the numberOfSelectedItems is " + numberOfSelectedItems + " and the last index is " + lastIndexOfSelectedItems);
-
-        if (lastIndexOfSelectedItems < commandObservableList.size()-1) {
-
-            for (int i = 0; i < numberOfSelectedItems; i++) {
-//                System.out.println("swapping " + commandObservableList.get(lastIndexOfSelectedItems) + " " +  commandObservableList.get(lastIndexOfSelectedItems-1));
-
-                Collections.swap(commandObservableList, lastIndexOfSelectedItems-i, lastIndexOfSelectedItems + 1-i);
-
-            }
-
+            indices.forEach(key->{
+                commandsTable.getSelectionModel().select(key+1);
+            });
 
         }
     }
 
 
-    public static void shiftCommandUp(TableView commandsTable, ObservableList<Command> commandObservableList) {
-
+    public synchronized static void shiftCommandUp(TableView commandsTable, ObservableList<Command> commandObservableList) {
 
         ObservableList<Command> selectedItems = commandsTable.getSelectionModel().getSelectedItems();
-        int firstIndexOfSelectedItems = commandObservableList.indexOf(selectedItems.get(0));
-        int numberOfSelectedItems = selectedItems.size();
+        ArrayList<Integer> indices = new ArrayList<>();
+        selectedItems.forEach(item->indices.add(commandObservableList.indexOf(item)));
 
-        if (firstIndexOfSelectedItems > 0) {
+        if (indices.get(0) > 0) {
+            indices.forEach(key->{
+//                   System.out.println("we are swapping " + key + " and " + (key-1));
+                   Collections.swap(commandObservableList, key, key-1);
+            });
 
-            for (int i = 0; i < numberOfSelectedItems; i++) {
-                Collections.swap(commandObservableList, firstIndexOfSelectedItems + i, firstIndexOfSelectedItems - 1 + i);
+            indices.forEach(key->{
+                commandsTable.getSelectionModel().select(key-1);
+            });
+
             }
-        }
     }
-
-
 }
