@@ -71,9 +71,11 @@ public class TableInitialization {
         ArrayList<Integer> indices = new ArrayList<>();
         selectedItems.forEach(item->indices.add(commandObservableList.indexOf(item)));
 
+
         if (indices.get(indices.size()-1) < commandObservableList.size()-1) {
+            Collections.reverse(indices);
             indices.forEach(key->{
-//                   System.out.println("we are swapping " + key + " and " + (key-1));
+                System.out.println("we are swapping " + key + " and " + (key+1));
                 Collections.swap(commandObservableList, key, key+1);
             });
 

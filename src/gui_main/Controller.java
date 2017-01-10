@@ -23,6 +23,8 @@ public class Controller implements Initializable {
     public TableView commandsTable;
     public TextField shortcutKeyTF;
     public TextField executableTF;
+
+    //the class command should have modifier and shortcut key property (trigger) and executable or action property
     ObservableList<Command> commandObservableList = FXCollections.observableArrayList();
 
     public void activeTheTerminalRobot(ActionEvent actionEvent) {
